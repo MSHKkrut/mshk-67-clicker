@@ -1,27 +1,10 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>67 Кликер от MSHK</title>
-    <hta:application 
-        id="clicker67"
-        applicationname="67 Clicker by MSHK"
-        border="thin"
-        borderstyle="normal"
-        caption="yes"
-        maximizebutton="no"
-        minimizebutton="yes"
-        showintaskbar="yes"
-        singleinstance="yes"
-        sysmenu="yes"
-        windowstate="normal"
-        icon="icon.ico" 
-    />
-    <script>
-        window.resizeTo(450, 700);
-    </script>
+    <link rel="manifest" href="manifest.json">
     <style>
         body {
             margin: 0;
@@ -191,20 +174,20 @@
     </div>
 
     <script>
-        var splash = document.getElementById('splash-screen');
-        var clickZone = document.getElementById('click-zone');
-        var skinShop = document.getElementById('skin-shop');
-        var btn67 = document.getElementById('btn-67');
-        var btn69 = document.getElementById('btn-69');
+        const splash = document.getElementById('splash-screen');
+        const clickZone = document.getElementById('click-zone');
+        const skinShop = document.getElementById('skin-shop');
+        const btn67 = document.getElementById('btn-67');
+        const btn69 = document.getElementById('btn-69');
 
-        var totalClicks = 0;       
-        var currentSkin = '67';    
-        var skin69Unlocked = false; 
+        let totalClicks = 0;       
+        let currentSkin = '67';    
+        let skin69Unlocked = false; 
 
-        setTimeout(function() {
+        setTimeout(() => {
             splash.style.opacity = '0';
             splash.style.transform = 'scale(1.1)';
-            setTimeout(function() {
+            setTimeout(() => {
                 splash.remove();
                 clickZone.classList.add('show');
                 skinShop.classList.add('visible'); 
@@ -224,7 +207,7 @@
                 }
             }
 
-            var num = document.createElement('div');
+            const num = document.createElement('div');
             num.classList.add('floating-number');
             
             if (currentSkin === '67') {
@@ -239,10 +222,10 @@
             num.style.top = y + 'px';
             document.body.appendChild(num);
 
-            setTimeout(function() { num.remove(); }, 600);
+            setTimeout(() => { num.remove(); }, 600);
         }
 
-        btn67.addEventListener('click', function() {
+        btn67.addEventListener('click', () => {
             if (currentSkin === '67') return;
             currentSkin = '67';
             clickZone.innerText = '67';
@@ -251,7 +234,7 @@
             btn69.className = 'skin-btn';
         });
 
-        btn69.addEventListener('click', function() {
+        btn69.addEventListener('click', () => {
             if (!skin69Unlocked || currentSkin === '69') return;
             currentSkin = '69';
             clickZone.innerText = '69';
@@ -260,11 +243,13 @@
             btn69.className = 'skin-btn gold-active';
         });
 
-        clickZone.addEventListener('mousedown', function(e) { triggerSpawn(e.clientX, e.clientY); });
-        clickZone.addEventListener('touchstart', function(e) {
+        clickZone.addEventListener('mousedown', (e) => triggerSpawn(e.clientX, e.clientY));
+        clickZone.addEventListener('touchstart', (e) => {
             e.preventDefault();
-            triggerSpawn(e.touches[0].clientX, e.touches[0].clientY);
+            const touch = e.touches;
+            triggerSpawn(touch.clientX, touch.clientY);
         });
     </script>
 </body>
 </html>
+
