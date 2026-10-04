@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <!-- ЭТА СТРОКА ЗАСТАВИТ WINDOWS ИСПОЛЬЗОВАТЬ СОВРЕМЕННЫЙ ДВИЖОК -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>67 Кликер от MSHK</title>
+    <hta:application 
+        id="clicker67"
+        applicationname="67 Clicker by MSHK"
+        border="thin"
+        borderstyle="normal"
+        caption="yes"
+        maximizebutton="no"
+        minimizebutton="yes"
+        showintaskbar="yes"
+        singleinstance="yes"
+        sysmenu="yes"
+        windowstate="normal"
+        icon="icon.ico" 
+    />
+    <script>
+        window.resizeTo(450, 700);
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0a0a0c;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            font-family: 'Arial Black', Impact, sans-serif;
+        }
+
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #0a0a0c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .splash-text {
+            font-size: 64px;
+            font-weight: 900;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+            letter-spacing: 5px;
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            100% { transform: scale(1.05); opacity: 1; }
+        }
+
+        #game-container {
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #click-zone {
+            font-size: 160px; 
+            font-weight: 900;
+            cursor: pointer;
+            position: relative;
+            z-index: 10;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: transform 0.05s ease, opacity 0.5s ease, color 0.3s, text-shadow 0.3s;
+        }
+
+        #click-zone.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .skin-67 {
+            color: #00ffcc; 
+            text-shadow: 
+                0 1px 0 #00cca3, 0 2px 0 #00b38f, 0 3px 0 #00997a, 0 4px 0 #008066, 0 5px 0 #006652,
+                0 10px 20px rgba(0, 255, 204, 0.5), 0 0 40px rgba(0, 255, 204, 0.3);
+        }
+        .skin-67:active {
+            transform: scale(0.9) !important;
+            text-shadow: 0 1px 0 #00997a, 0 2px 0 #006652, 0 5px 10px rgba(0, 255, 204, 0.8);
+        }
+
+        .skin-69 {
+            color: #ffd700; 
+            text-shadow: 
+                0 1px 0 #cca100, 0 2px 0 #b38d00, 0 3px 0 #997800, 0 4px 0 #806400, 0 5px 0 #665000,
+                0 10px 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(255, 215, 0, 0.4);
+        }
+        .skin-69:active {
+            transform: scale(0.9) !important;
+            text-shadow: 0 1px 0 #997800, 0 2px 0 #665000, 0 5px 10px rgba(255, 215, 0, 0.9);
+        }
+
+        .floating-number {
+            position: absolute;
+            font-size: 36px;
+            font-weight: bold;
+            pointer-events: none;
+            animation: flyUp 0.6s ease-out forwards;
+            z-index: 100;
+        }
+
+        .float-67 {
+            color: #ff007f; 
+            text-shadow: 0 0 10px rgba(255, 0, 127, 0.8);
+        }
+        .float-69 {
+            color: #ffffff; 
+            text-shadow: 0 0 15px #ffd700, 0 0 5px #ffd700;
+        }
+
+        @keyframes flyUp {
+            0% { transform: translate(-50%, -50%) scale(0.5) rotate(0deg); opacity: 1; }
+            50% { transform: translate(-50%, -120%) scale(1.3) rotate(-15deg); opacity: 1; }
+            100% { transform: translate(-50%, -220%) scale(0.8) rotate(15deg); opacity: 0; }
+        }
+
+        #skin-shop {
+            margin-top: 40px;
+            display: flex;
+            gap: 20px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 20;
+        }
+        #skin-shop.visible {
+            opacity: 1;
+        }
+
+        .skin-btn {
+            font-family: sans-serif;
+            font-weight: bold;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: 2px solid #333;
+            background: #151518;
+            color: #888;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .skin-btn.active {
+            border-color: #00ffcc;
+            color: #fff;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+        }
+        .skin-btn.gold-active {
+            border-color: #ffd700;
+            color: #fff;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+        }
+        .skin-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="splash-screen">
+        <div class="splash-text">MSHK</div>
+    </div>
+
+    <div id="game-container">
+        <div id="click-zone" class="skin-67">67</div>
+    </div>
+
+    <div id="skin-shop">
+        <button id="btn-67" class="skin-btn active">Скин 67</button>
+        <button id="btn-69" class="skin-btn" disabled>🔒 69 (67 кликов)</button>
+    </div>
+
+    <script>
+        var splash = document.getElementById('splash-screen');
+        var clickZone = document.getElementById('click-zone');
+        var skinShop = document.getElementById('skin-shop');
+        var btn67 = document.getElementById('btn-67');
+        var btn69 = document.getElementById('btn-69');
+
+        var totalClicks = 0;       
+        var currentSkin = '67';    
+        var skin69Unlocked = false; 
+
+        setTimeout(function() {
+            splash.style.opacity = '0';
+            splash.style.transform = 'scale(1.1)';
+            setTimeout(function() {
+                splash.remove();
+                clickZone.classList.add('show');
+                skinShop.classList.add('visible'); 
+            }, 500);
+        }, 2000);
+
+        function triggerSpawn(x, y) {
+            if (!clickZone.classList.contains('show')) return;
+
+            if (!skin69Unlocked) {
+                totalClicks++;
+                if (totalClicks >= 67) {
+                    skin69Unlocked = true;
+                    btn69.disabled = false;
+                    btn69.innerText = 'Скин 69 (Золотой)';
+                    alert('🔥 ПАСХАЛКА! Вы сделали 67 кликов! Открыт Золотой Скин 69!');
+                }
+            }
+
+            var num = document.createElement('div');
+            num.classList.add('floating-number');
+            
+            if (currentSkin === '67') {
+                num.innerText = '67';
+                num.classList.add('float-67');
+            } else {
+                num.innerText = '69';
+                num.classList.add('float-69');
+            }
+
+            num.style.left = x + 'px';
+            num.style.top = y + 'px';
+            document.body.appendChild(num);
+
+            setTimeout(function() { num.remove(); }, 600);
+        }
+
+        btn67.addEventListener('click', function() {
+            if (currentSkin === '67') return;
+            currentSkin = '67';
+            clickZone.innerText = '67';
+            clickZone.className = 'show skin-67';
+            btn67.className = 'skin-btn active';
+            btn69.className = 'skin-btn';
+        });
+
+        btn69.addEventListener('click', function() {
+            if (!skin69Unlocked || currentSkin === '69') return;
+            currentSkin = '69';
+            clickZone.innerText = '69';
+            clickZone.className = 'show skin-69';
+            btn67.className = 'skin-btn';
+            btn69.className = 'skin-btn gold-active';
+        });
+
+        clickZone.addEventListener('mousedown', function(e) { triggerSpawn(e.clientX, e.clientY); });
+        clickZone.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            triggerSpawn(e.touches[0].clientX, e.touches[0].clientY);
+        });
+    </script>
+</body>
+</html>
