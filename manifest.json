@@ -1,12 +1,27 @@
 {
-  "background_color": "#0a0a0c",
-  "dir": "ltr",
-  "display": "standalone",
   "name": "67 Clicker",
-  "orientation": "any",
-  "scope": "/",
   "short_name": "67 Clicker",
-  "start_url": "/",
+  "description": "Clicker game by MSHK",
+  "id": "mshk67",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a0a0c",
   "theme_color": "#0a0a0c",
-  "id": "67 Clicker"
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
 }
